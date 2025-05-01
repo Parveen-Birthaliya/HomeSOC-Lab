@@ -32,8 +32,9 @@ Establish a comprehensive, on-premise SOC lab to simulate real-world adversary t
 * Suricata & Zeek – Network traffic inspection and IDS signature tuning.
 
  ## Setup & Configuration Steps
- ### 1. SOC-ELK Server 
-* Cloud Provider: Vultr Cloud (Cloud Compute Instance)
+### 1. SOC-ELK Server 
+* Location: Toronto, Canada
+* Machine Type:  Dedicated CPU
 
 * Operating System: Ubuntu Server 24.04 LTS (64-bit)
 
@@ -49,7 +50,6 @@ Establish a comprehensive, on-premise SOC lab to simulate real-world adversary t
 
   * VPC 2.0: Enabled for private/internal network communication
 
-  * Public IP Access: Secured via firewall (ufw)
 
   * SSH Access: Allowed only from my public IP
 
@@ -58,4 +58,93 @@ Establish a comprehensive, on-premise SOC lab to simulate real-world adversary t
   * SSH (Port 22): Allowed only for my IP
 
   * Kibana (Port 5601): Temporarily allowed for my IP
+
+### 2. SOC-Window-Server 
+* Location: Toronto, Canada
+* Machine Type: Shared CPU
+
+* Operating System: Windows Server 2022 Standard
+
+* Resources Allocated:
+
+  * vCPUs: 1 cores
+
+  * RAM: 2 GB
+
+  * Storage: 55 GB SSD
+
+* Network Configuration:
+
+  * VPC 2.0: Enabled for private/internal network communication
+
+### 3. SOC-Fleet-Server 
+* Location: Toronto, Canada
+* Machine Type: Dedicated CPU
+
+* Operating System:Windows 2022 Standard
+
+* Resources Allocated:
+
+  * vCPUs: 1 cores
+
+  * RAM: 4 GB
+
+  * Storage: 30 GB SSD
+
+* Network Configuration:
+
+  * VPC 2.0: Enabled for private/internal network communication
  
+
+### 4. SOC-Linux-Server 
+* Location: Toronto, Canada
+* Machine Type: Shared CPU
+
+* Operating System:Ubuntu Server 24.04 LTS (64-bit)
+
+* Resources Allocated:
+
+  * vCPUs: 1 cores
+
+  * RAM: 1 GB
+
+  * Storage: 25 GB SSD
+
+* Network Configuration:
+
+  * VPC 2.0: Enabled for private/internal network communication
+
+
+### 5. SOC-Mythic-Server 
+* Location: Toronto, Canada
+* Machine Type: Shared CPU
+
+* Operating System:Ubuntu Server 24.04 LTS (64-bit)
+
+* Resources Allocated:
+
+  * vCPUs: 2 cores
+
+  * RAM: 4 GB
+
+  * Storage: 80 GB SSD
+
+### 6. SOC-osTicket-Server 
+* Location: Toronto, Canada
+* Machine Type: Shared CPU
+
+* Operating System:Windows 2022 Standard
+
+* Resources Allocated:
+
+  * vCPUs: 1 cores
+
+  * RAM: 2 GB
+
+  * Storage: 55 GB SSD
+
+* Network Configuration:
+
+  * VPC 2.0: Enabled for private/internal network communication
+
+
