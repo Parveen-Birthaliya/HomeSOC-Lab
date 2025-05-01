@@ -31,7 +31,7 @@ Establish a comprehensive, on-premise SOC lab to simulate real-world adversary t
 
 * Suricata & Zeek – Network traffic inspection and IDS signature tuning.
 
- ## Setup & Configuration Steps
+## Infrastructure Overview: Machine Configurations
 ### 1. SOC-ELK Server 
 * Location: Toronto, Canada
 * Machine Type:  Dedicated CPU
@@ -146,5 +146,41 @@ Establish a comprehensive, on-premise SOC lab to simulate real-world adversary t
 * Network Configuration:
 
   * VPC 2.0: Enabled for private/internal network communication
+ 
+
+## 📖 Project Roadmap
+
+| Phase | Description                              | Status        |
+|-------|------------------------------------------|---------------|
+| Phase 1 | Provision core infrastructure (6 machines on Vultr, VPC setup, firewall hardening) | ✅ Completed |
+| Phase 2 | Install and configure ELK stack (SOC-ELK) | ✅ Completed |
+| Phase 3 | Deploy Sysmon & Elastic Agent (SOC-Windows, SOC-Fleet) | ✅ Completed|
+| Phase 4 | Integrate Kibana Dashboards & Detections | ✅ Completed |
+| Phase 5 | Simulate attacks with Mythic C2          | ✅ Completed |
+| Phase 6 | Enable incident tracking with osTicket   | ✅ Completed |
+| Phase 7 | Detection fine-tuning, alert triage, and reporting |  🔄 In Progress |
+
+ 
+
+## 🧪 Tested Attack Scenarios
+
+| Attack Technique         | MITRE Tactic        | Tool/Method Used         | Detection Source     | Status     |
+|--------------------------|---------------------|---------------------------|----------------------|------------|
+| Brute-force RDP login    | Initial Access      | Hydra                     | Sysmon → ELK         | ✅ Tested  |
+| PowerShell C2 beacon     | Command & Control   | Mythic with PoshC2        | Sysmon, Suricata     | ✅ Tested  |
+| Lateral movement (psexec)| Lateral Movement    | Impacket psexec.py        | Sysmon + Zeek        | 🔄 Pending |
+| Credential dumping       | Credential Access   | Mimikatz                  | Sysmon (Event 10)    | 🔄 Pending |
+| Malicious DNS query      | Command & Control   | DNSCat2                   | Zeek + Suricata      | ⏳ Planned |
+
+## 🧠 Future Enhancements
+
+- 🔐 **Integrate TheHive + Cortex** for automated incident response workflows and IOC enrichment.
+- 🛰️ **MISP (Malware Information Sharing Platform)** for threat intel ingestion and pivot-based investigation.
+- 🧬 **Elastic ML Anomaly Detection** for behavior-based threat hunting and rare pattern identification.
+- ⚙️ **SOAR Automation** using ElastAlert, Curator, or custom Python scripts.
+- ☁️ **SIEM to Cloud Integration** (e.g., ingesting from AWS CloudTrail or Azure logs for hybrid SOC).
+- 📦 **Infrastructure-as-Code**: Automate machine provisioning with Terraform + Ansible for repeatability.
+- 📊 **Grafana Integration** for advanced visualization beyond Kibana.
+- 🔍 **Host forensic triage** with Velociraptor or GRR for incident deep-dive workflows.
 
 
