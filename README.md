@@ -85,7 +85,7 @@ Establish a comprehensive, on-premise SOC lab to simulate real-world adversary t
 
 * Resources Allocated:
 
-### Requirements  
+**Requirements**  
 List preconditions before you begin.  
 - **OS Base Image:** Ubuntu Server 24.02 LTS  
 - **Instance Specs:** ≥2 vCPU, 4 GB RAM, attached to private VLAN  
