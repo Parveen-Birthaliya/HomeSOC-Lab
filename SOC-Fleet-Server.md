@@ -36,8 +36,8 @@ List preconditions before you begin.
  * Copy insallation command
   - Click on 3 dot -> Management -> Fleet -> Agent -> Add Fleet Server
   - Copy the linux command(Make sure you copy command from your Fleet)
-    ```bash
-    curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-9.0.0-linux-x86_64.tar.gz
+```bash
+curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-9.0.0-linux-x86_64.tar.gz
 tar xzvf elastic-agent-9.0.0-linux-x86_64.tar.gz
 cd elastic-agent-9.0.0-linux-x86_64
 sudo ./elastic-agent install \
@@ -47,7 +47,7 @@ sudo ./elastic-agent install \
   --fleet-server-es-ca-trusted-fingerprint=9a078b91ca735f42980606885cf5fe54a0c1ceb6df997e1a45e6bd581bnc2186 \
   --fleet-server-port=8220 \
   --install-servers
-  ```
+```
  * Add Firewall Rule
    | TCP | 1-65535 | Paste-Fleet-ip |
  * Installing agent
