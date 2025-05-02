@@ -87,6 +87,9 @@ ufw allow 8220
   .\elastic-agent.exe install --url=https://216.159.148.71:8220 --enrollment-token=cTNrTGJwWUJnfThRSEFRYTdW8mw6VWJyNjl6NDJnRmxmMUMwMng3RFplQQ==
   ```
 
+### Precautions
+ * The ip and token are changed , as these are not real ip and token I used for my SOC lab
+
     
   
   
