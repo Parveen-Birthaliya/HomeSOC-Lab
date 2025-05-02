@@ -140,7 +140,7 @@ dpkg -i kibana-9.0.0-amd64.deb
    server.host:your_ELK-Server_ip
    server.port:5601
 ```
- 4.  **Enable & Start Service**
+ 4. **Enable & Start Service**
 
 
 * Reload systemd configs
@@ -159,4 +159,21 @@ sudo systemctl start kibana.service
 ```bash
 sudo systemctl status kibana.service
 ```
+5. **Accessing Web Server**
+* Move to the following directory
+```bash
+cd /usr/share/elasticsearch/bin
+```
+* Get Enrollment Token & Copy the token and save it 
+```bash
+./elasticsearch-create-enrollment-token --scope kibana
+```
+* Add firewall rule to access kibana dashboard
+  
+  
+  | TCP | 1-65535 | myip |
 
+* Allow port 6501 in SOC-ELK-Server
+```bash
+ufw allow 5601
+```
