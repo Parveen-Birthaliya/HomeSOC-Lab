@@ -64,7 +64,7 @@ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-9.0.0-am
  ```bash
 dpkg -i elasticsearch-9.0.0-amd64.deb
 ```
-Copy the Security Autoconfiguration Mainly Password
+* Copy the Security Autoconfiguration Mainly Password
 
 3. **changing elasticsearch.config**
    Move to elastic config file directory
@@ -159,7 +159,7 @@ sudo systemctl start kibana.service
 ```bash
 sudo systemctl status kibana.service
 ```
-5. **Accessing Web Server**
+5. **Setup configuaration to access Web Server**
 * Move to the following directory
 ```bash
 cd /usr/share/elasticsearch/bin
@@ -177,3 +177,45 @@ cd /usr/share/elasticsearch/bin
 ```bash
 ufw allow 5601
 ```
+6. **Accessing Kibana Web Service**
+* Access web using : https://elk-server-ip:5601
+* Enter enrollment token we previously saved
+* We can access verification code using the follwing command(In directory /usr/share/kibana/bin)
+```bash
+./kibana-verification-code
+```
+* Enter user-login
+```bash
+username: elastic
+password: we saved when installing the elasticsearch( Security Autoconfiguration)
+```
+xpack.encryptedSavedObjects.encryptionKey:
+xpack.reporting.encryptionKey: 
+xpack.security.encryptionKey: 
+
+
+7. **Adding Encryption Key**
+* Get Key in /usr/share/kibana/bin
+```bash
+ ./kibana-encryption-keys generate
+```
+* Add these key to Kibana Keystore
+```bash
+   .kibana-keystore add xpack.encryptedSavedObjects.encryptionKey
+```
+Now enter the key 
+```bash
+   .kibana-keystore add xpack.reporting.encryptionKey
+```
+Now enter the key 
+```bash
+   .kibana-keystore add xpack.security.encryptionKey
+```
+Now enter the key 
+
+* restart kibana
+```bash
+systemctl restart kibana.service
+```
+
+* Now relogin to kibana web service
