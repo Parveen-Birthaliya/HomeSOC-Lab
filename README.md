@@ -192,6 +192,6 @@ List preconditions before you begin.
 - 🔍 **Host forensic triage** with Velociraptor or GRR for incident deep-dive workflows.
 
 ## References
-<a https://youtube.com/playlist?list=PLG6KGSNK4PuBb0OjyDIdACZnb8AoNBeq6&si=ddBccVKlon1BdScR">MyDFIR SOC Playlist</a>
+- <a href="https://youtube.com/playlist?list=PLG6KGSNK4PuBb0OjyDIdACZnb8AoNBeq6&si=ddBccVKlon1BdScR">MyDFIR SOC Playlist</a>
 
 
