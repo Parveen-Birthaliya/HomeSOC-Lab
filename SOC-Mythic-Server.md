@@ -137,5 +137,4 @@ sysmon -accepteula -c sysmonconfig.xml
 
 ---
 
-This document is now structured for professional use in your SOC lab setup and ready for integration with other server configurations. Let me know if you need any adjustments or further additions!
 
