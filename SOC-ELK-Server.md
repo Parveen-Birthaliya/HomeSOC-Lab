@@ -56,9 +56,9 @@ sudo apt-get update && sudo apt-get upgrade -y
 1. **Googel Elasticsearch & Download**
  Google elastic search download, Click on the First website then choose the deb x86_64
  and then copy the download link and then  use the following Command to download
-   ```bash
-   wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-9.0.0-amd64.deb
-   ```
+```bash
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-9.0.0-amd64.deb
+```
    
 2. **Unpacking Elasticsearch**
  ```bash
@@ -68,18 +68,18 @@ Copy the Security Autoconfiguration Mainly Password
 
 3. **changing elasticsearch.config**
    Move to elastic config file directory
-   ```bash
+```bash
    cd /etc/elasticsearch
-   ```
+```
    use nano to edit config file
-   ```bash
-   nano elasticsearch.config
-   ```
+ ```bash
+   nano elasticsearch.yml
+  ```
    uncomment  network.host and http.port and then just update network.host value
-   ```bash
+ ```bash
    network.host:your_ELK-Server_ip
    http.port:9200
-   ```
+```
 4. **Creating Firewall and its rule for Our SOC lab**
    * SOC-ELK-Server -> Settings -> Firewall -> Manage -> Add firewall group
    * Enter Firewall Name Like : My-SOC-LAB-Firewall
@@ -97,15 +97,66 @@ Copy the Security Autoconfiguration Mainly Password
 
  6.  **Enable & Start Service**
 
+
+* Reload systemd configs
 ```bash
-# Reload systemd configs
 sudo systemctl daemon-reload
-
-# Enable Elasticsearch at boot
+```
+* Enable Elasticsearch at boot
+```bash
 sudo systemctl enable elasticsearch.service
-
-# Start Elasticsearch now
+```
+* Start Elasticsearch now
+```bash
 sudo systemctl start elasticsearch.service
-
-# Check Status of Elasticsearch now
+```
+* Check Status of Elasticsearch now
+```bash
 sudo systemctl status elasticsearch.service
+```
+### Kibana installation & Configuration
+
+1. **Googel Elasticsearch & Download**
+ Google Kibana download, Click on the First website then choose the deb x86_64
+ and then copy the download link and then  use the following Command to download
+```bash
+wget https://artifacts.elastic.co/downloads/kibana/kibana-9.0.0-amd64.deb
+```
+2. **Unpacking Elasticsearch**
+ ```bash
+dpkg -i kibana-9.0.0-amd64.deb
+```
+3. **changing kibana.config**
+   Move to kibana config file directory
+```bash
+   cd /etc/kibana
+```
+   use nano to edit config file
+```bash
+   nano kibana.yml
+```
+   uncomment  server.host and server.port and then just update server.host value
+```bash
+   server.host:your_ELK-Server_ip
+   server.port:5601
+```
+ 4.  **Enable & Start Service**
+
+
+* Reload systemd configs
+```bash
+sudo systemctl daemon-reload
+```
+* Enable Kibana at boot
+```bash
+sudo systemctl enable kibana.service
+```
+* Start kibana now
+```bash
+sudo systemctl start kibana.service
+```
+* Check Status of kibana now
+```bash
+sudo systemctl status kibana.service
+```
+
