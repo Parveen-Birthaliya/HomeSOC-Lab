@@ -1,13 +1,13 @@
-# 🧠 SOC-Mythic-Server.md
+
+# SOC-Mythic-Server.md
 
 ## Overview
 
-The `SOC-Mythic-Server` serves as the adversary emulation and command-and-control (C2) simulation node within the HomeSOC lab. It leverages the Mythic C2 framework to generate real-world attack traffic, 
-test detection logic, and emulate advanced persistent threat (APT) behavior in a controlled environment.
+The `SOC-Mythic-Server` is a key component of the HomeSOC lab that simulates adversarial behavior through command-and-control (C2) activities. It serves as an emulation tool for detecting and analyzing threat actor tactics using Mythic, which aids in offensive security testing, behavior simulation, and live-response activities.
 
 ---
 
-## 📌 System Specifications
+## System Specifications
 
 | Attribute | Configuration           |
 | --------- | ----------------------- |
@@ -21,85 +21,121 @@ test detection logic, and emulate advanced persistent threat (APT) behavior in a
 
 ---
 
-## 🔧 Installation & Configuration Steps
+## Installed Tools & Agents
 
-### 1. Prerequisites
+| Tool          | Purpose                           | Installation Status |
+| ------------- | --------------------------------- | ------------------- |
+| Mythic C2     | Adversary emulation and C2 beacon | ✅ Installed         |
+| Elastic Agent | Log shipping and detection        | ✅ Installed         |
+| Sysmon        | Endpoint telemetry collection     | ✅ Installed         |
 
-```bash
-sudo apt update && sudo apt upgrade -y
-sudo apt install git docker.io docker-compose -y
-```
+---
 
-### 2. Clone Mythic Repository
+## Installation & Configuration Steps
+
+### 1. Install Mythic C2
+
+To deploy Mythic C2, you need Docker installed to run the containers.
+
+* Clone Mythic repository:
 
 ```bash
 git clone https://github.com/its-a-feature/Mythic.git
 cd Mythic
 ```
 
-### 3. Launch Mythic C2 Framework
+* Set up Mythic environment:
 
 ```bash
-./mythic-cli install github https://github.com/MythicAgents/poseidon
-./mythic-cli install github https://github.com/MythicAgents/apfell
-./mythic-cli start
+./setup.sh
 ```
 
-### 4. Access Mythic Web Interface
+* Start Mythic C2 services:
 
-* URL: `http://<MYTHIC_IP>:7443`
-* Default Credentials:
+```bash
+docker-compose up -d
+```
 
-  * Username: `mythic_adm`
-  * Password: `mythic_password`
+* Access the Mythic C2 UI via `http://<your-server-ip>:7443`.
 
-> 🔐 Update default credentials immediately after first login.
+### 2. Install Elastic Agent
 
----
+1. Download the Elastic Agent package from the Fleet server:
 
-## 🧪 Agents & Profiles
+```bash
+wget https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-<version>-linux-x86_64.tar.gz
+tar -xvzf elastic-agent-<version>-linux-x86_64.tar.gz
+cd elastic-agent-<version>
+```
 
-| Agent    | Profile    | Use Case                            |
-| -------- | ---------- | ----------------------------------- |
-| Poseidon | HTTP/HTTPS | Linux lateral movement, beaconing   |
-| Apfell   | WebSockets | macOS simulation (optional)         |
-| PoshC2   | PowerShell | Windows simulation with obfuscation |
+2. Install the agent with Fleet server URL and enrollment token:
 
----
+```bash
+sudo ./elastic-agent install --url=http://<fleet-server-ip>:8220 --enrollment-token=<your-token>
+```
 
-## ⚔️ Adversary Simulation Use Cases
+### 3. Configure Sysmon for Logging
 
-| Scenario                     | MITRE Tactic      | Technique ID | Detection Source | Status         |
-| ---------------------------- | ----------------- | ------------ | ---------------- | -------------- |
-| Beacon Callback via HTTPS    | C2 Channel        | T1071.001    | Zeek + Suricata  | ✅ Tested       |
-| PowerShell Command Execution | Execution         | T1059.001    | Sysmon + Kibana  | ✅ Tested       |
-| Reverse Shell on Linux       | Execution         | T1059.004    | Zeek + Suricata  | 🔄 In Progress |
-| User Enumeration & Dumping   | Credential Access | T1003.001    | Sysmon + ELK     | ⏳ Planned      |
+Sysmon will collect additional endpoint telemetry.
 
----
+* Download and install Sysmon:
 
-## 📊 Monitoring & Detection
+```bash
+curl -L https://download.sysinternals.com/files/Sysmon.zip -o Sysmon.zip
+unzip Sysmon.zip
+sysmon -accepteula -c sysmonconfig.xml
+```
 
-* Mythic agent events forwarded via:
-
-  * Sysmon (on Windows targets)
-  * Zeek/Suricata (for C2 traffic visibility)
-  * Logstash pipelines normalize artifacts into ECS
+* Confirm Sysmon installation by checking logs in `C:\Windows\System32\Sysmon` for generated event logs.
 
 ---
 
-## 🧭 Future Enhancements
+## Dashboards Utilized
 
-* ✅ Integrate Mythic with Atomic Red Team for scripted attack chains
-* 🔄 Enable Canary tokens for deception layer
-* 🔐 TLS Cert Pinning + HTTPS profile hardening
-* 📦 Automate agent deployment via Ansible
-* 🎯 Red Team → Blue Team validation loop: detection effectiveness scoring
+| Dashboard Name           | Source                 | Purpose                                |
+| ------------------------ | ---------------------- | -------------------------------------- |
+| Mythic C2 Activity       | Mythic C2 Logs         | C2 beacon activity detection           |
+| Endpoint Telemetry       | Sysmon + Elastic Agent | Process creation, network connections  |
+| Suspicious Command Usage | Sysmon + Elastic Agent | Detection of unusual command execution |
 
 ---
 
-## 📎 References
+## Detection Use Cases
 
-* [Mythic Framework GitHub](https://github.com/its-a-feature/Mythic)
-* [Mythic Documentation](https://docs.mythic-c2.net/)
-* [MITRE ATT\&CK Navigator](https://attack.mitre.org/)
+| Detection Name         | Technique         | MITRE ID  | Source                 | Status         |
+| ---------------------- | ----------------- | --------- | ---------------------- | -------------- |
+| C2 Beacon Detection    | Command & Control | T1071     | Mythic C2              | ✅ Tested       |
+| Suspicious PowerShell  | T1059.001         | T1059.001 | Sysmon + Elastic Agent | ✅ Tested       |
+| Lateral Movement (WMI) | Lateral Movement  | T1021.002 | Sysmon + Elastic Agent | 🔄 In Progress |
+
+---
+
+## Log Sources
+
+| Source             | Method        | Normalized By             |
+| ------------------ | ------------- | ------------------------- |
+| Mythic C2 Logs     | Mythic API    | Custom Ingest             |
+| Sysmon Logs        | Sysmon Agent  | Logstash Ingest Pipelines |
+| Windows Event Logs | Elastic Agent | ECS Field Mapping         |
+
+---
+
+## Future Enhancements
+
+* Automate IOC correlation with external threat intelligence sources.
+* Integrate with TheHive for automated incident triage and case management.
+* Implement Sigma rules for custom detection scenarios.
+* Enable dynamic alerting based on attack patterns detected through Mythic C2.
+
+---
+
+## References
+
+* [Mythic C2 GitHub Repository](https://github.com/its-a-feature/Mythic)
+* [Elastic Agent Installation Guide](https://www.elastic.co/guide/en/fleet/current/elastic-agent-installation.html)
+* [Sysmon GitHub](https://github.com/Sysinternals/Sysmon)
+
+---
+
+This document is now structured for professional use in your SOC lab setup and ready for integration with other server configurations. Let me know if you need any adjustments or further additions!
+
