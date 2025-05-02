@@ -28,3 +28,18 @@ Windows Server 2022 endpoint configured with Sysmon, Elastic Agent, and C2 agent
 
 2. **Windows**
 * Use Remote Desktop and enter all details
+  
+## Sysmon Setup
+**Download Sysmon**
+- Access Window Server
+- Search for sysmon download and click on first website then download sysmon
+- Extract the Sysmon
+** Download Sysmon moduler
+- Search sysmon moduler github (olafhortang)
+- click on sysmonconfig.xml and then click raw and save it
+- Put it into extracted sysmon folder
+**Installing Sysmon**
+  ```bash
+  .\Sysmon64.exe -i sysmonconfig.xml
+  ```
+  
