@@ -156,7 +156,7 @@ List preconditions before you begin.
   * VPC 2.0: Enabled for private/internal network communication
  
 
-## 📖 Project Roadmap
+##  Project Roadmap
 
 | Phase | Description                              | Status        |
 |-------|------------------------------------------|---------------|
@@ -170,7 +170,7 @@ List preconditions before you begin.
 
  
 
-## 🧪 Tested Attack Scenarios
+##  Tested Attack Scenarios
 
 | Attack Technique         | MITRE Tactic        | Tool/Method Used         | Detection Source     | Status     |
 |--------------------------|---------------------|---------------------------|----------------------|------------|
@@ -180,7 +180,7 @@ List preconditions before you begin.
 | Credential dumping       | Credential Access   | Mimikatz                  | Sysmon (Event 10)    | 🔄 Pending |
 | Malicious DNS query      | Command & Control   | DNSCat2                   | Zeek + Suricata      | ⏳ Planned |
 
-## 🧠 Future Enhancements
+##  Future Enhancements
 
 - 🔐 **Integrate TheHive + Cortex** for automated incident response workflows and IOC enrichment.
 - 🛰️ **MISP (Malware Information Sharing Platform)** for threat intel ingestion and pivot-based investigation.
@@ -190,5 +190,8 @@ List preconditions before you begin.
 - 📦 **Infrastructure-as-Code**: Automate machine provisioning with Terraform + Ansible for repeatability.
 - 📊 **Grafana Integration** for advanced visualization beyond Kibana.
 - 🔍 **Host forensic triage** with Velociraptor or GRR for incident deep-dive workflows.
+
+## References
+<a https://youtube.com/playlist?list=PLG6KGSNK4PuBb0OjyDIdACZnb8AoNBeq6&si=ddBccVKlon1BdScR">MyDFIR SOC Playlist</a>
 
 
