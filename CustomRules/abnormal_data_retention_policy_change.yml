@@ -1,0 +1,28 @@
+
+---
+name: Abnormal Data Retention Policy Change
+description: Detects unauthorized changes to S3 lifecycle configurations via CloudTrail management events.
+author: PK
+references:
+  - https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html :contentReference[oaicite:8]{index=8}
+  - https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-module-aws.html :contentReference[oaicite:9]{index=9}
+tags:
+  - T1078
+  - Persistence
+  - Data Retention
+severity: high
+type: threshold
+index:
+  - filebeat-aws-cloudtrail-*
+language: kuery
+query: >
+  aws.cloudtrail.eventName:("PutBucketLifecycleConfiguration" OR "PutBucketLifecycle" OR "DeleteBucketLifecycle")
+  AND NOT aws.cloudtrail.user_identity.arn:("arn:aws:iam::123456789012:role/ApprovedAutomation" OR "arn:aws:iam::123456789012:user/SVC_LifecycleManager")
+threshold:
+  field: aws.cloudtrail.user_identity.arn
+  value: 1
+  time_window: 1m
+enabled: true
+schedule:
+  interval: 1m
+...
